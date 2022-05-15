@@ -1,8 +1,9 @@
 import csv
+import json
 
 import os
 
-from flask import request, jsonify
+from flask import request, jsonify, Response
 from flask_restful import Resource
 
 from database.models import User, Product,ProductReview
@@ -61,13 +62,17 @@ class ADDProductReviewAPI(Resource):
             # check userid
             data = request.get_json()
             barcode = data.get('barcode')
-            product = Product.objects(barcode=barcode).first()
-            if product:
-               ProductReview(userID=authorized.id, **data).save()
-               resp = jsonify({'message': 'review added'})
-               resp.status_code = 200
-               return resp
-            return not_found()
+            review = ProductReview(userID=authorized.id, barcode=barcode, review=data.get('review'))
+            try:
+                product = Product.objects.filter(barcode=barcode).first()
+                product.review = review
+                product.save()
+                resp = jsonify({'message': 'review added'
+                               })
+                resp.status_code = 200
+                return resp
+            except:
+                return not_found()
 
         return forbidden()
 
@@ -79,15 +84,12 @@ class ProductSearchAPI(Resource):
 
         if authorized:
             page = int(request.args.get('page', 0))
-            limit = int(request.args.get('limit', 10))
-            reviews = dict()
-            user = dict()
-            data=request.get_json()
+            data = request.get_json()
             text = data.get('text')
             products = Product.objects(name__contains=text).filter(available=True)[:10]
-            for product in products:
-                reviews = ProductReview.objects(barcode=product.barcode)
-            return jsonify(products), 200
+            data = [{'totalCount': len(products)}] + [i.serializer for i in products]
+            response = data
+            return response, 200
 
         return forbidden()
 

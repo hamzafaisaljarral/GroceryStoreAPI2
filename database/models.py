@@ -1,6 +1,6 @@
 import datetime
 from mongoengine import Document, EmailField, StringField, IntField, BooleanField, EmbeddedDocumentField, \
-    EmbeddedDocument, DateTimeField, ObjectIdField, queryset_manager
+    EmbeddedDocument, DateTimeField, ObjectIdField, queryset_manager, DynamicEmbeddedDocument
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 
@@ -46,6 +46,21 @@ class User(Document):
         super(User, self).save(*args, **kwargs)
 
 
+class ProductReview(EmbeddedDocument):
+    userID = ObjectIdField(required=True)
+    barcode = IntField(required=True)
+    review = StringField(required=True)
+    createdAt = DateTimeField(default=datetime.datetime.utcnow)
+
+    @property
+    def productserializer(self):
+        user = User.objects.get(id=self.userID)
+        return{
+            'name': user.email,
+            'review': self.review
+        }
+
+
 class Product(Document):
     name = StringField(min_length=2)
     barcode = IntField(min_length=1)
@@ -53,11 +68,24 @@ class Product(Document):
     description = StringField(min_length=3)
     price = IntField(min_lenght=1)
     available = BooleanField()
+    review = EmbeddedDocumentField(ProductReview, required=False)
+
+    @property
+    def serializer(self):
+        reviews = []
+        if self.review:
+            reviews.append(self.review.productserializer)
+        return {
+            'name': self.name,
+            'description': self.description,
+            'price': self.price,
+            'available': self.available,
+            'review': reviews[:2]
+
+        }
 
 
-class ProductReview(Document):
-    userID = ObjectIdField(required=True)
-    barcode = IntField(required=True)
-    review = StringField(required=True)
-    createdAt = DateTimeField(default=datetime.datetime.utcnow)
+
+
+
 

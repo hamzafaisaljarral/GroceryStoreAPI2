@@ -36,3 +36,12 @@ def not_found() -> Response:
     resp = jsonify({'result': output})
     resp.status_code = 403
     return resp
+
+
+def user_exist() -> Response:
+    output = {"error":
+              {"msg": "403 error: this email is already registered."}
+              }
+    resp = jsonify({'result': output})
+    resp.status_code = 403
+    return resp

@@ -5,7 +5,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
 from database.models import User
 import datetime
 
-from resources.errors import unauthorized
+from resources.errors import unauthorized, user_exist
 
 
 class SignupApi(Resource):
@@ -15,10 +15,14 @@ class SignupApi(Resource):
         :return: JSON object
         """
         data = request.get_json()
-        post_user = User(**data)
-        post_user.save()
-        output = {'id': str(post_user.id)}
-        return jsonify({'result': output})
+        try:
+            User.objects.get(email=data.get('email'))
+        except:
+            post_user = User(**data)
+            post_user.save()
+            output = {'id': str(post_user.id)}
+            return jsonify({'result': output})
+        return user_exist()
 
 
 class LoginApi(Resource):
@@ -36,10 +40,3 @@ class LoginApi(Resource):
                                        'refresh_token': refresh_token,
                                        'logged_in_as': f"{user.email}"}})
 
-
-# class RefreshApi(Resource):
-#     @jwt_required(refresh=True)
-#     def get(self):
-#         accessToken = create_access_token(identity=get_jwt_identity(), expires_delta=datetime.timedelta(days=1))
-#         refreshToken = create_refresh_token(identity=get_jwt_identity(), expires_delta=datetime.timedelta(days=30))
-#         return {'accessToken': accessToken, 'refreshToken': refreshToken}
