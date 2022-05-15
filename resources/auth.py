@@ -7,6 +7,11 @@ import datetime
 
 from resources.errors import unauthorized, user_exist
 
+"""
+ALL API related to authentication
+
+"""
+
 
 class SignupApi(Resource):
     def post(self):
@@ -39,4 +44,3 @@ class LoginApi(Resource):
             return jsonify({'result': {'access_token': access_token,
                                        'refresh_token': refresh_token,
                                        'logged_in_as': f"{user.email}"}})
-

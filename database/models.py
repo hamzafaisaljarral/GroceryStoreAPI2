@@ -3,6 +3,11 @@ from mongoengine import Document, EmailField, StringField, IntField, BooleanFiel
     EmbeddedDocument, DateTimeField, ObjectIdField, queryset_manager, DynamicEmbeddedDocument
 from flask_bcrypt import generate_password_hash, check_password_hash
 
+"""
+ALL our models are declared here
+
+"""
+
 
 class Access(EmbeddedDocument):
     """
@@ -55,7 +60,7 @@ class ProductReview(EmbeddedDocument):
     @property
     def productserializer(self):
         user = User.objects.get(id=self.userID)
-        return{
+        return {
             'name': user.email,
             'review': self.review
         }
@@ -83,9 +88,3 @@ class Product(Document):
             'review': reviews[:2]
 
         }
-
-
-
-
-
-
