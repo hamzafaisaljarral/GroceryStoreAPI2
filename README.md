@@ -163,7 +163,8 @@ params
 http://127.0.0.1:5000/product/search?page=0**
 
 
-<img width="1010" alt="Screen Shot 2022-05-15 at 7 46 53 AM" src="https://user-images.githubusercontent.com/39766112/168456334-6e81648a-a9cf-4774-b4ce-b182fa3d1a25.png">
+<img width="1017" alt="Screen Shot 2022-05-15 at 8 23 48 AM" src="https://user-images.githubusercontent.com/39766112/168457210-75d6a0c2-380e-449a-aa92-0be01f13d59a.png">
+
 
 
 
