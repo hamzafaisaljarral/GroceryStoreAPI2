@@ -1,38 +1,52 @@
 
-Getting Started
+Getting Started:
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Prerequisites
+
+Prerequisites:
 Before you can run this project you need a install python first on your operating system. You can download python here and choose according to your operating system.
 #note : right now my mongodb atlas connection is created feel free to change it from apps.py file
+
 
 Installing
 First, clone this project from github using git command or git gui application like fork.
 
 $ https://github.com/hamzafaisaljarral/GroceryStoreAPI2.git
+
+
 Making environment for project to isolation python installing libraries for this project only.
 
-$ pip install virtualenv
+
+**$ pip install virtualenv
 $ virtualenv venv
 $ source venv/bin/activate
-Installing all libraries needed by this project using pip.
+Installing all libraries needed by this project using pip.**
 
-$ pip install -r requirements.txt
+**$ pip install -r requirements.txt**
 #note always Make a configuration file with name .env with the configrations of db link and key.
 
 
 Running the project.
-FLASK_APP=wsgi.py FLASK_DEBUG=1 flask run
+**FLASK_APP=wsgi.py FLASK_DEBUG=1 flask run**
+
 
 Testing
 To test api endpoint that has been created you can use curl utility. Before test, you must login first to get jwt token and using it in every request header you sent.
 or you can use postman i use post man i will give you instructions for that too.
 
-Register API
-http://localhost:5000/user/register
+**Register API
+http://localhost:5000/user/register**
+
+
+<img width="1004" alt="Screen Shot 2022-05-15 at 7 38 55 AM" src="https://user-images.githubusercontent.com/39766112/168456143-394ad6fb-282e-41e1-9667-313b7b1c0a33.png">
+
+
+
+
 
 #to create admin user
-#paramters
+
+**#paramters
 {
     "email": "adm@gmail.com",
     "password": "admin123",
@@ -41,11 +55,12 @@ http://localhost:5000/user/register
     "role": {
         "admin": "True"
     }
-}
+}**
+
 
 #to create client user
 #if you will not pass role it will set user by default to client
-{
+**{
     "email": "kk@gmail.com",
     "password": "abc123",
     "gender": "M",
@@ -53,16 +68,27 @@ http://localhost:5000/user/register
     "role": {
         "client": "True"
     }
-}
+}**
+
 
 
 login API ENDPOINT
 
-http://localhost:5000/user/login
+**http://localhost:5000/user/login**
+
+
+<img width="1012" alt="Screen Shot 2022-05-15 at 7 40 55 AM" src="https://user-images.githubusercontent.com/39766112/168456181-52386dba-08db-4d41-b6fe-2c782de6709f.png">
+
+
+
+
+
 
 #params
 
-{
+
+
+**{
     "email": "admin2@gmail.com",
     "password": "admin123"
 }
@@ -75,11 +101,37 @@ http://localhost:5000/user/login
         "logged_in_as": "admin2@gmail.com",
         "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MjU4MDc2NywianRpIjoiZGI2ZDUxMWUtMDljYS00M2Q5LWJlZGUtZjg0YzE2ZTNkYTA2IiwidHlwZSI6InJlZnJlc2giLCJzdWIiOiI2MjdlNjU3ZTdkYzc1MjA0NTVlZjg3ZjMiLCJuYmYiOjE2NTI1ODA3NjcsImV4cCI6MTY1NTE3Mjc2N30.-Q7zw7WZwNIlBke6HdovxLVjGuFSckKWAbAKPQL84DU"
     }
-}
+}**
+
+
+
+
 
 File upload API for Admin only
 
-http://127.0.0.1:5000/product
+
+
+**http://127.0.0.1:5000/product**
+
+
+<img width="1012" alt="Screen Shot 2022-05-15 at 7 42 46 AM" src="https://user-images.githubusercontent.com/39766112/168456223-043dccf7-74a4-4af1-bdcd-7a51017f3282.png">
+
+
+
+<img width="1013" alt="Screen Shot 2022-05-15 at 7 43 41 AM" src="https://user-images.githubusercontent.com/39766112/168456234-c35e0fb8-1107-49bd-991a-ec2d516ec7a2.png">
+
+
+
+
+
+<img width="1056" alt="Screen Shot 2022-05-15 at 7 44 25 AM" src="https://user-images.githubusercontent.com/39766112/168456262-e57dc8be-ea27-46d9-a588-c894b104da0a.png">
+
+
+
+
+
+
+
 
 #you need to pass the token in header 
 #you need to pass in params
@@ -87,8 +139,14 @@ file = "your csv file"
 
 
 
+
 Add Product Review
-http://127.0.0.1:5000/product/review
+**http://127.0.0.1:5000/product/review**
+
+
+<img width="1014" alt="Screen Shot 2022-05-15 at 7 45 30 AM" src="https://user-images.githubusercontent.com/39766112/168456309-6e1e5190-a650-4dd4-9128-5e485d35bd76.png">
+
+
 
 #need to pass token in header
 params
@@ -97,9 +155,17 @@ params
     "review": "new one"
 }
 
-Search Product pass page and text field 
 
-http://127.0.0.1:5000/product/search?page=0
+
+
+**Search Product pass page and text field 
+
+http://127.0.0.1:5000/product/search?page=0**
+
+
+<img width="1010" alt="Screen Shot 2022-05-15 at 7 46 53 AM" src="https://user-images.githubusercontent.com/39766112/168456334-6e81648a-a9cf-4774-b4ce-b182fa3d1a25.png">
+
+
 
 #need to pass token in header
 #params
@@ -190,5 +256,10 @@ http://127.0.0.1:5000/product/search?page=0
     ]
 }
 
+
+
 #Heroku Link to Test these API
+
+
+
 
