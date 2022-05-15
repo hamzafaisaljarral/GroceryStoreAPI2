@@ -1,6 +1,6 @@
 import datetime
 from mongoengine import Document, EmailField, StringField, IntField, BooleanField, EmbeddedDocumentField, \
-    EmbeddedDocument, DateTimeField, ObjectIdField, queryset_manager, DynamicEmbeddedDocument
+    EmbeddedDocument, DateTimeField, ObjectIdField, queryset_manager, DynamicEmbeddedDocument, ListField
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 """
@@ -73,13 +73,13 @@ class Product(Document):
     description = StringField(min_length=3)
     price = IntField(min_lenght=1)
     available = BooleanField()
-    review = EmbeddedDocumentField(ProductReview, required=False)
+    review = ListField(EmbeddedDocumentField(ProductReview, required=False))
 
     @property
     def serializer(self):
         reviews = []
-        if self.review:
-            reviews.append(self.review.productserializer)
+        for i in self.review:
+            reviews.append(i.productserializer)
         return {
             'name': self.name,
             'description': self.description,

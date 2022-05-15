@@ -73,8 +73,8 @@ class ADDProductReviewAPI(Resource):
             barcode = data.get('barcode')
             review = ProductReview(userID=authorized.id, barcode=barcode, review=data.get('review'))
             try:
-                product = Product.objects.filter(barcode=barcode).first()
-                product.review = review
+                product = Product.objects(barcode=barcode).first()
+                product.review.append(review)
                 product.save()
                 resp = jsonify({'message': 'review added'
                                 })
